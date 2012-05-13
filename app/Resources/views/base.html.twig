@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}(Insert Title Here){% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bootstrap/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/darkstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('datatables/css/jquery.dataTables.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" />
+    {% block stylesheets %}{% endblock %}
+    <script type="text/javascript" src="{{ asset('js/jquery-1.7.2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datatables/js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('datatables/js/paging.js') }}"></script>
+
+{% block javascripts %}{% endblock %}
+    <script type="text/javascript">
+        {% block jscript %}{% endblock %}
+        $(document).ready(function() {
+            {% block jquery %}{% endblock %}
+        });
+    </script>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+
+{% set info = guild|guildInfo %}
+
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner">
+<div class="container">
+  <h1 class="brand">
+  {{ info['name'] }}
+  <small>{{ info['realm'] }} - Level {{ info['level'] }} - {{ info['side']|faction }}</small>
+  </h1>
+  <ul class="nav pull-right">
+    <li><a href="{{ path('guild_roster', {'_format': 'html'}) }}">Roster</a></li>
+    <li><a href="{{ path('guild_news', {'_format': 'html'}) }}">News</a></li>
+  </ul>
+</div>
+</div>
+</div>
+
+{% block body %}{% endblock %}
+</body>
+</html>

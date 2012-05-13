@@ -1,0 +1,127 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ guild }} - Guild Roster{% endblock %}
+
+{% block jscript %}
+$.fn.dataTableExt.oSort['alt-string-asc']  = function(a,b) {
+   var x = a.match(/alt="(.*?)"/)[1].toLowerCase();
+   var y = b.match(/alt="(.*?)"/)[1].toLowerCase();
+   return ((x < y) ? -1 : ((x > y) ?  1 : 0));
+};
+$.fn.dataTableExt.oSort['alt-string-desc'] = function(a,b) {
+   var x = a.match(/alt="(.*?)"/)[1].toLowerCase();
+   var y = b.match(/alt="(.*?)"/)[1].toLowerCase();
+   return ((x < y) ?  1 : ((x > y) ? -1 : 0));
+};
+
+$.extend( $.fn.dataTableExt.oStdClasses, {
+    "sWrapper": "dataTables_wrapper form-inline"
+} );
+{% endblock %}
+
+{% block jquery %}
+$('#rosterTable').dataTable( {
+    "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+    "sPaginationType": "bootstrap",
+    "oLanguage": {
+        "sLengthMenu": "_MENU_ characters per page"
+    },
+    "aaSorting": [[4, 'asc'], [3, 'desc'], [0, 'asc']],
+    "aoColumns": [
+        null,
+        { "sType": "alt-string" },
+        { "sType": "alt-string" },
+        null, 
+        { "sType": "alt-string" },
+        null
+    ]
+} );
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+{% if error is not null %}
+  <div class="row">
+    <div class="span10 offset1">
+      <p><strong>Error:</strong> {{error}}</p>
+    </div>
+  </div>
+{% endif %}
+
+{#
+  <div class="row">
+    <div class="span12">
+      <div class="page-header">
+	<h1>
+	  {{ json['name'] }}
+	  <small> {{ json['realm'] }} - Level {{ json['level'] }} {{ json['side']|faction }} Guild</small>
+	</h1>
+      </div>
+    </div>
+  </div>
+#}
+
+<div class="row">
+  <div class="span12">
+    <h2 class="page-header">Members</h2>
+    <table class="table" id="rosterTable">
+      <thead>
+	<tr>
+	  <th>Name</th>
+	  <th>Race</th>
+	  <th>Class</th>
+	  <th>Level</th>
+	  <th>Guild Rank</th>
+	  <th>Achievement Points</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for member in json['members'] %}
+	{% set class = member['character']['class']|class %}
+	{% set race = member['character']['race']|race %}
+	{% set gender = member['character']['gender']|gender %}
+	<tr>
+	  <td class="character-name color-c{{ member['character']['class'] }}"><a href="{{ member['character']['name']|characterLink }}">{{ member['character']['name'] }}</a></td>
+	  <td class="center">
+	    <a href="http://us.battle.net/wow/en/game/race/{{ race|slug }}">
+	      <img src="{{ member['character']['race']|raceIcon(gender, 18) }}" class="wowicon-frame frame-18" alt="{{ race }}" title="{{ race }}" />
+	    </a>
+	  </td>
+	  <td class="center">
+	    <a href="http://us.battle.net/wow/en/game/class/{{ class|slug }}">
+	      <img src="{{ member['character']['class']|classIcon(18) }}" class="wowicon-frame frame-18" alt="{{ class }}" title="{{ class }}" />
+	    </a>
+	  </td>
+	  <td class="center">
+	    {{ member['character']['level'] }}
+	  </td>
+	  <td class="center">
+	    <span alt="Rank {{ member['rank'] }}">{{ member['rank']|rank(json['name']) }}</span>
+	  </td>
+	  <td class="center">
+	    {{ member['character']['achievementPoints'] }}
+	  </td>
+	</tr>
+	{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="row">
+  <hr class="span12" />
+</div>
+
+<div class="row">
+  <div class="span12">
+    <ul class="unstyled">
+      <li><strong>Data Last Modified:</strong> {{ json['lastModified']|wowdate }}</li>
+      <li><strong>Source Data:</strong> <a href="{{ url|raw }}">{{url}}</a></li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}

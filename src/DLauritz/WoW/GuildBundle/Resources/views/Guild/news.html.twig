@@ -1,0 +1,47 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ guild }} - Recent News{% endblock %}
+
+{% block body %}
+
+<div class="container">
+  {% if error is not null %}
+  <div class="row">
+    <div class="span10 offset1">
+      <p><strong>Error:</strong> {{error}}</p>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="span12">
+      <h2 class="page-header">News</h2>
+      {% if json['news'] is not empty %}
+      <table class="table">
+	{% for article in json['news'] %}
+	{% include 'DLauritzWoWGuildBundle:Guild:newsarticle.html.twig'
+	with {'article': article} %}
+	{% endfor %}
+      </table>
+      {% else %}
+      <div class="center"><em>No News</em></div>
+      {% endif %}
+    </div>
+  </div>
+
+<div class="row">
+  <hr class="span12" />
+</div>
+
+<div class="row">
+  <div class="span12">
+    <ul class="unstyled">
+      <li><strong>Data Last Modified:</strong> {{ json['lastModified']|wowdate }}</li>
+      <li><strong>Source Data:</strong> <a href="{{ url|raw }}">{{url}}</a></li>
+    </ul>
+  </div>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+DLauritz\Wow\GuildBundle\Entity\Guild:
+  type: entity
+  table: guilds
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    name:
+      type: string
+    realm:
+      type: string
+    lastModified:
+      type: timestamp
+    battlegroup:
+      type: string
+    level:
+      type: integer
+    side:
+      type: boolean
+    achievement_points:
+      type: integer

@@ -1,0 +1,114 @@
+body {
+    padding-top: 40px;
+}
+
+.center {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul.inline li {
+    display: inline;
+    padding-right: 10px;
+}
+
+.table tbody tr:hover td,.table tbody tr:hover th{ background-color:#4f4f4f; }
+
+.character-name { font-weight: bold; }
+
+.achievement { color: #ff8000; }
+
+.item-name { }
+
+/* item quality */
+.color-q0, .color-q0 a, .color-poor { color: #9d9d9d !important; } /* poor (gray) */
+.color-q1, .color-q1 a, .color-common { color: #ffffff !important; } /* common (white) */
+.color-q2, .color-q2 a, .color-uncommon { color: #1eff00 !important; } /* uncommon (green) */
+.color-q3, .color-q3 a, .color-rare { color: #0081ff !important; } /* #0070dd rare (blue) */
+.color-q4, .color-q4 a, .color-epic { color: #c600ff !important; } /* #a335ee epic (purple) */
+.color-q5, .color-q5 a, .color-legendary { color: #ff8000 !important; } /* lengendary (orange) */
+.color-q6, .color-q6 a, .color-artifact { color: #e5cc80 !important; } /* artifact (gold) */
+.color-q7, .color-q7 a, .color-heirloom { color: #e5cc80 !important; } /* heirloom (gold) */
+
+/* class */
+.color-c1,  .color-c1 a { color: #c69b6d !important; } /* warrior */
+.color-c2,  .color-c2 a { color: #f48cba !important; } /* paladin */
+.color-c3,  .color-c3 a { color: #aad372 !important; } /* hunter */
+.color-c4,  .color-c4 a { color: #fff468 !important; } /* rogue */
+.color-c5,  .color-c5 a { color: #f0ebe0 !important; } /* priest */
+.color-c6,  .color-c6 a { color: #c41e3b !important; } /* death knight */
+.color-c7,  .color-c7 a { color: #2359ff !important; } /* shaman */
+.color-c8,  .color-c8 a { color: #68ccef !important; } /* mage */
+.color-c9,  .color-c9 a { color: #9382c9 !important; } /* warlock */
+.color-c11, .color-c11 a { color: #ff7c0a !important; } /* druid */
+
+/* Sortable tables */
+table.table thead .sorting,
+table.table thead .sorting_asc,
+table.table thead .sorting_desc,
+table.table thead .sorting_asc_disabled,
+table.table thead .sorting_desc_disabled {
+    cursor: pointer;
+    *cursor: hand;
+}
+ 
+table.table thead .sorting { background: url('../images/sort_both.png') no-repeat center right; }
+table.table thead .sorting_asc { background: url('../images/sort_asc.png') no-repeat center right; }
+table.table thead .sorting_desc { background: url('../images/sort_desc.png') no-repeat center right; }
+ 
+table.table thead .sorting_asc_disabled { background: url('../images/sort_asc_disabled.png') no-repeat center right; }
+table.table thead .sorting_desc_disabled { background: url('../images/sort_desc_disabled.png') no-repeat center right; }
+
+div.dataTables_length label {
+    float: left;
+    text-align: left;
+}
+ 
+div.dataTables_length select {
+}
+ 
+div.dataTables_filter label {
+    float: right;
+}
+ 
+div.dataTables_info {
+    padding-top: 8px;
+}
+ 
+div.dataTables_paginate {
+    float: right;
+    margin: 0;
+}
+
+/* This CSS is liberally taken from Battle.net (http://us.battle.net/wow/static/css/wow.css?v24)
+   since the images come from there already. */
+.wowicon-frame {
+    display: inline-block;
+    overflow: hidden;
+    padding: 1px;
+    background-color: #000;
+    background-position: 1px 1px;
+    background-repeat: no-repeat;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #434445;
+    border-bottom-color: #2f3032;
+    border-top-color: #b1b2b4;
+}
+
+.wowicon-frame img {
+    display: block;
+    vertical-align: bottom;
+}
+
+.wowicon-frame.frame-56 {
+    height: 56px;
+    width: 56px;
+}
+
+.wowicon-frame.frame-18 {
+    width: 18px;
+    height: 18px;
+}

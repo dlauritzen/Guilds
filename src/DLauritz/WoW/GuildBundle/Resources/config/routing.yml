@@ -1,0 +1,23 @@
+guild_roster:
+  pattern: /guild/roster.{_format}
+  defaults:
+    _controller: DLauritzWoWGuildBundle:Guild:roster
+    _format: html
+  requirements:
+    _format: html|json
+
+character_profile:
+  pattern: /character/{name}.{_format}
+  defaults:
+    _controller: DLauritzWoWGuildBundle:Character:profile
+    _format: html
+  requirements:
+    _format: html|json
+
+guild_news:
+  pattern: /guild/news.{_format}
+  defaults:
+    _controller: DLauritzWoWGuildBundle:Guild:news
+    _format: html
+  requirements:
+    _format: html|json
