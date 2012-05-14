@@ -5,7 +5,7 @@ class Settings
 {
 
   const realm = "Argent Dawn";
-  const guild = "Crossroads";
+  const guild = "The Dojo";
 
   const apiBase = "http://us.battle.net/api/wow"; // The base path for API calls
   const iconBase = "http://us.media.blizzard.com/wow/icons"; // The base path for icons
@@ -16,12 +16,13 @@ class Settings
 				    'The Dojo' => array(0 => 'Guild Master')
 				    );
 
+  // http://us.battle.net/api/wow/data/character/races
   public static $races = array(
 			       1 => 'Human',
 			       2 => 'Orc',
 			       3 => 'Dwarf',
 			       4 => 'Night Elf',
-			       5 => 'Forsaken',
+			       5 => 'Undead', // or Forsaken, if you wish
 			       6 => 'Tauren',
 			       7 => 'Gnome',
 			       8 => 'Troll',
@@ -31,6 +32,7 @@ class Settings
 			       22 => 'Worgen'
 			       );
 
+  // http://us.battle.net/api/wow/data/character/classes
   public static $classes = array(
 				 1 => 'Warrior',
 				 2 => 'Paladin',

@@ -1,0 +1,13 @@
+DLauritz\WoW\GuildBundle\Entity\Statistics:
+  type: entity
+  table: api_statistics
+  id:
+    date:
+      type: string
+  fields:
+    api_calls:
+      type: integer
+    last_call_url:
+      type: string
+    last_call_timestamp:
+      type: datetime

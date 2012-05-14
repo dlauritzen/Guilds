@@ -16,7 +16,7 @@ class JSONUtil
 
   public static function getJSONFromAPI($url) {
     $response = file_get_contents($url);
-    $json = json_decode($response, true);
+    $json = json_decode($response, true); // false = return as object, true = return as array
     return $json;
   }
 

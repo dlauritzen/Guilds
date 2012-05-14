@@ -1,0 +1,9 @@
+DLauritz\WoW\GuildBundle\Entity\AchievementStatus:
+  type: entity
+  table: achievement_status
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    

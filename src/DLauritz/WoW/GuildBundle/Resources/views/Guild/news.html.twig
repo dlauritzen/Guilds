@@ -1,11 +1,11 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ guild }} - Recent News{% endblock %}
+{% block title %}{{ guild.name }} - Recent News{% endblock %}
 
 {% block body %}
 
 <div class="container">
-  {% if error is not null %}
+  {% if error is defined and error is not null %}
   <div class="row">
     <div class="span10 offset1">
       <p><strong>Error:</strong> {{error}}</p>
@@ -16,11 +16,11 @@
   <div class="row">
     <div class="span12">
       <h2 class="page-header">News</h2>
-      {% if json['news'] is not empty %}
+      {% if guild.news is not empty %}
       <table class="table">
-	{% for article in json['news'] %}
-	{% include 'DLauritzWoWGuildBundle:Guild:newsarticle.html.twig'
-	with {'article': article} %}
+	{% for event in guild.news %}
+	{% include
+	'DLauritzWoWGuildBundle:Guild:newsarticle.html.twig' with {'event': event} %}
 	{% endfor %}
       </table>
       {% else %}
@@ -36,7 +36,7 @@
 <div class="row">
   <div class="span12">
     <ul class="unstyled">
-      <li><strong>Data Last Modified:</strong> {{ json['lastModified']|wowdate }}</li>
+      <li><strong>Data Last Modified:</strong> {{ lastModified|wowdate }}</li>
       <li><strong>Source Data:</strong> <a href="{{ url|raw }}">{{url}}</a></li>
     </ul>
   </div>

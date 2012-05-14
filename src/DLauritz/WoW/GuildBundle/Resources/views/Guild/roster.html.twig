@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ guild }} - Guild Roster{% endblock %}
+{% block title %}{{ guild.name }} - Guild Roster{% endblock %}
 
 {% block jscript %}
 $.fn.dataTableExt.oSort['alt-string-asc']  = function(a,b) {
@@ -41,7 +41,7 @@ $('#rosterTable').dataTable( {
 {% block body %}
 
 <div class="container">
-{% if error is not null %}
+{% if error is defined and error is not null %}
   <div class="row">
     <div class="span10 offset1">
       <p><strong>Error:</strong> {{error}}</p>
@@ -54,8 +54,8 @@ $('#rosterTable').dataTable( {
     <div class="span12">
       <div class="page-header">
 	<h1>
-	  {{ json['name'] }}
-	  <small> {{ json['realm'] }} - Level {{ json['level'] }} {{ json['side']|faction }} Guild</small>
+	  {{ guild.name }}
+	  <small> {{ guild.realm }} - Level {{ guild.level }} {{ guild.side|faction }} Guild</small>
 	</h1>
       </div>
     </div>
@@ -77,30 +77,30 @@ $('#rosterTable').dataTable( {
 	</tr>
       </thead>
       <tbody>
-	{% for member in json['members'] %}
-	{% set class = member['character']['class']|class %}
-	{% set race = member['character']['race']|race %}
-	{% set gender = member['character']['gender']|gender %}
+	{% for member in guild.members %}
+	{% set race = member.race|race %}
+	{% set class = member.class|class %}
+	{% set gender = member.gender|gender %}
 	<tr>
-	  <td class="character-name color-c{{ member['character']['class'] }}"><a href="{{ member['character']['name']|characterLink }}">{{ member['character']['name'] }}</a></td>
+	  <td class="character-name color-c{{ member.class }}"><a href="{{ member.name|characterLink }}">{{ member.name }}</a></td>
 	  <td class="center">
 	    <a href="http://us.battle.net/wow/en/game/race/{{ race|slug }}">
-	      <img src="{{ member['character']['race']|raceIcon(gender, 18) }}" class="wowicon-frame frame-18" alt="{{ race }}" title="{{ race }}" />
+	      <img src="{{ member.race|raceIcon(gender, 18) }}" class="wowicon-frame frame-18" alt="{{ race }}" title="{{ race }}" />
 	    </a>
 	  </td>
 	  <td class="center">
 	    <a href="http://us.battle.net/wow/en/game/class/{{ class|slug }}">
-	      <img src="{{ member['character']['class']|classIcon(18) }}" class="wowicon-frame frame-18" alt="{{ class }}" title="{{ class }}" />
+	      <img src="{{ member.class|classIcon(18) }}" class="wowicon-frame frame-18" alt="{{ class }}" title="{{ class }}" />
 	    </a>
 	  </td>
 	  <td class="center">
-	    {{ member['character']['level'] }}
+	    {{ member.level }}
 	  </td>
 	  <td class="center">
-	    <span alt="Rank {{ member['rank'] }}">{{ member['rank']|rank(json['name']) }}</span>
+	    <span alt="Rank {{ member.guildRank }}">{{ member.guildRank|rank(guild.name) }}</span>
 	  </td>
 	  <td class="center">
-	    {{ member['character']['achievementPoints'] }}
+	    {{ member.achievementPoints }}
 	  </td>
 	</tr>
 	{% endfor %}
@@ -116,7 +116,7 @@ $('#rosterTable').dataTable( {
 <div class="row">
   <div class="span12">
     <ul class="unstyled">
-      <li><strong>Data Last Modified:</strong> {{ json['lastModified']|wowdate }}</li>
+      <li><strong>Data Last Modified:</strong> {{ lastModified|wowdate }}</li>
       <li><strong>Source Data:</strong> <a href="{{ url|raw }}">{{url}}</a></li>
     </ul>
   </div>

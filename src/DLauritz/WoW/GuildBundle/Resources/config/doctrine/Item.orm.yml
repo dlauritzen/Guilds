@@ -1,0 +1,34 @@
+DLauritz\WoW\GuildBundle\Entity\Item:
+  type: entity
+  table: items
+  id:
+    id:
+      type: bigint
+      generator: { strategy: NONE }
+  fields:
+    name:
+      type: string
+    description:
+      type: string
+    icon:
+      type: string
+    item_level:
+      type: integer
+    item_class:
+      type: integer
+    item_sub_class:
+      type: integer
+    quality:
+      type: integer
+    item_bind:
+      type: integer
+    buy_price:
+      type: integer
+    sell_price:
+      type: integer
+    required_level:
+      type: integer
+    is_auctionable:
+      type: boolean
+    display_info_id:
+      type: integer

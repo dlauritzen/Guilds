@@ -1,4 +1,4 @@
-DLauritz\Wow\GuildBundle\Entity\Guild:
+DLauritz\WoW\GuildBundle\Entity\Guild:
   type: entity
   table: guilds
   id:
@@ -10,13 +10,36 @@ DLauritz\Wow\GuildBundle\Entity\Guild:
       type: string
     realm:
       type: string
-    lastModified:
-      type: timestamp
+    last_modified:
+      type: datetime
     battlegroup:
       type: string
     level:
       type: integer
     side:
-      type: boolean
+      type: integer
     achievement_points:
       type: integer
+    emblem_icon:
+      type: integer
+    emblem_icon_color:
+      type: string
+      length: 8
+    emblem_border:
+      type: integer
+    emblem_border_color:
+      type: string
+      length: 8
+    emblem_background_color:
+      type: string
+      length: 8
+  oneToMany:
+    members:
+      targetEntity: Character
+      mappedBy: guild
+    news:
+      targetEntity: NewsEvent
+      mappedBy: guild
+#    achievements:
+#      targetEntity: AchievementStatus
+#      mappedBy: guild

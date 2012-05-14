@@ -8,6 +8,12 @@ use DLauritz\WoW\Utilities\JSONUtil;
 class DataExtension extends \Twig_Extension
 {
 
+  protected $model;
+
+  public function __construct(\DLauritz\WoW\Model $model) {
+    $this->model = $model;
+  }
+
   public function getGlobals() {
     return array(
 		 'guild' => Settings::guild,
@@ -29,8 +35,8 @@ class DataExtension extends \Twig_Extension
 		 'relative' => new \Twig_Filter_Method($this, 'getRelativeDate'),
 
 		 'itemInfo' => new \Twig_Filter_Method($this, 'getItemInfoFromID'),
-		 'characterInfo' => new \Twig_Filter_Method($this, 'getCharacterInfoFromName'),
-		 'guildInfo' => new \Twig_Filter_Method($this, 'getGuildInfo'),
+		 'characterModel' => new \Twig_Filter_Method($this, 'getCharacterFromName'),
+		 'guildModel' => new \Twig_Filter_Method($this, 'getGuildFromName'),
 
 		 'icon' => new \Twig_Filter_Method($this, 'getIconFromPath'),
 		 'avatar' => new \Twig_Filter_Method($this, 'getAvatarFromPath'),
@@ -43,6 +49,10 @@ class DataExtension extends \Twig_Extension
 
   public function getName() {
     return 'wowdata_extension';
+  }
+
+  private function getModel() {
+    return $this->model;
   }
 
   public function getRaceFromID($id) {
@@ -110,34 +120,59 @@ class DataExtension extends \Twig_Extension
     return strtolower(str_replace(' ','-',$text));
   }
 
-  public function getWoWFormattedDate($timestamp) {
-    $secs = $timestamp / 1000; // since it comes in milliseconds
-    return date('D, d F Y h:i:s A T', $secs);
+  public function getWoWFormattedDate($datetime) {
+    //    $secs = $timestamp / 1000; // since it comes in milliseconds
+    //    return date('D, d F Y h:i:s A T', $secs);
+    return $datetime->format('D, d F Y h:i:s A T');
   }
 
-  public function getRelativeDate($timestamp) {
-    $now = time();
-    $then = $timestamp / 1000;
-    $diff = $now - $then;
+  public function getRelativeDate($then) {
+    $now = $this->getModel()->getCurrentDateTime();
+    $diff = $now->diff($then);
 
-    return $this->getRelativeTime($diff, $then);
+    $seconds = $diff->format('%s');
+    $minutes = $diff->format('%i');
+    $hours = $diff->format('%h');
+    $days = $diff->format('%a');
+    $weeks = $days / 7;
+
+    $ret = "";
+
+    if ($days == 0) {
+      if ($hours == 0) {
+	if ($minutes == 0) {
+	  $ret .= $seconds . " seconds";
+	} else {
+	  $ret .= $minutes . " minutes";
+	}
+      } else {
+	$ret .= $hours . " hours";
+      }
+    } else if ($days < 7) {
+      $ret .= $days . " days";
+    } else if ($weeks <= 3) {
+      $ret .= $weeks . " weeks";
+    } else if ($months < 2) {
+      $ret .= $months . " months";
+    } else {
+      return $this->getWoWFormattedDate($then);
+    }
+
+    return $ret . " ago";
   }
 
   public function getItemInfoFromID($id) {
-    $json = JSONUtil::getJSONFromAPI(APIUtil::getItemURL($id));
-    return $json;
+    return $this->getModel()->getItem($id);
   }
 
-  public function getCharacterInfoFromName($name) {
+  public function getCharacterFromName($name) {
     $realm = Settings::realm;
-    $json = JSONUtil::getJSONFromAPI(APIUtil::getCharacterURL($realm, $name));
-    return $json;
+    return $this->getModel()->getCharacter($realm, $name);
   }
 
-  public function getGuildInfo($name, $fields = array()) {
+  public function getGuildFromName($name) {
     $realm = Settings::realm;
-    $json = JSONUtil::getJSONFromAPI(APIUtil::getGuildURL($realm, $name, $fields));
-    return $json;
+    return $this->getModel()->getGuild($realm, $name);
   }
 
   public function getLinkForItem($id) {

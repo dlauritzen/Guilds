@@ -1,21 +1,22 @@
-{% set type = article['type'] %}
-{% set character = article['character']|characterInfo %}
-{% set time = article['timestamp'] %}
+{% set type = event.type %}
+{% set character = event.character %}
+{% set time = event.timestamp %}
+{% set details = event.details %}
 
 <tr>
   <td class="span9">
     {% if type == 'playerAchievement' %}
-    {% set achievement = article['achievement'] %}
+    {% set achievement = details['achievement'] %}
     <img src="{{ achievement.icon|icon(18) }}" class="wowicon-frame frame-18" />
-    <a class="character-name color-c{{ character['class'] }}" href="{{ character['name']|characterLink }}">{{ character['name'] }}</a>
+    <a class="character-name color-c{{ character.class }}" href="{{ character.name|characterLink }}">{{ character.name }}</a>
     earned the achievement <span class="achievement">{{ achievement['title'] }}</span> for {{ achievement['points'] }} points.
     
     {% elseif type == 'itemLoot' or type == 'itemCraft' or type == 'itemPurchase' %}
-    {% set item = article['itemId']|itemInfo %}
+    {% set item = details['itemId']|itemInfo %}
     <img src="{{ item.icon|icon(18) }}" class="wowicon-frame frame-18" />
-    <a class="character-name color-c{{ character['class'] }}" href="{{ character['name']|characterLink }}">{{ character['name'] }}</a>
+    <a class="character-name color-c{{ character.class }}" href="{{ character.name|characterLink }}">{{ character.name }}</a>
     {% if type == 'itemLoot' %}obtained{% elseif type == 'itemCraft' %}crafted item{% else %}purchased item{% endif %}
-    <a class="item-name color-epic" href="{{ item.id|itemLink }}">{{ item['name'] }}</a>.
+    <a class="item-name color-epic" href="{{ item.id|itemLink }}">{{ item.name }}</a>.
     
     {% else %}
     <em>Unhandled article type: {{ type }}</em>

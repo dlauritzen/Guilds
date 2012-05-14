@@ -24,14 +24,12 @@
 </head>
 <body>
 
-{% set info = guild|guildInfo %}
-
 <div class="navbar navbar-fixed-top">
 <div class="navbar-inner">
 <div class="container">
   <h1 class="brand">
-  {{ info['name'] }}
-  <small>{{ info['realm'] }} - Level {{ info['level'] }} - {{ info['side']|faction }}</small>
+  {{ guild.name }}
+  <small>{{ guild.realm }} - Level {{ guild.level }} - {{ guild.side|faction }}</small>
   </h1>
   <ul class="nav pull-right">
     <li><a href="{{ path('guild_roster', {'_format': 'html'}) }}">Roster</a></li>

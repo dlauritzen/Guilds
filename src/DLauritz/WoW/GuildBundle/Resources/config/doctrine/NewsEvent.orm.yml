@@ -1,0 +1,28 @@
+DLauritz\WoW\GuildBundle\Entity\NewsEvent:
+  type: entity
+  table: news
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    timestamp:
+      type: datetime
+    type:
+      column: event_type
+      type: string
+    # The rest of the JSON for this event type, to be parsed elsewhere
+    details:
+      type: text
+  manyToOne:
+    character:
+      targetEntity: Character
+      joinColumn:
+        name: character_id
+        referencedColumnName: id
+    guild:
+      targetEntity: Guild
+      inversedBy: news
+      joinColumn:
+        name: guild_id
+        referencedColumnName: id

@@ -50,6 +50,11 @@ BUNDLE_NAME = DLauritz
 entities:
 	$(PHP) app/console doctrine:generate:entities $(BUNDLE_NAME)
 
+# Wipe the database
+resetdb:
+	$(PHP) app/console doctrine:schema:drop --force
+	$(PHP) app/console doctrine:schema:update --force
+
 ###############################################################################
 ## INSTALL
 ##

@@ -1,0 +1,43 @@
+DLauritz\WoW\GuildBundle\Entity\Character:
+  type: entity
+  table: characters
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    last_modified:
+      type: datetime
+      nullable: true
+    fully_loaded:
+      type: boolean
+      nullable: true
+      default: true
+    name:
+      type: string
+    realm:
+      type: string
+    battlegroup:
+      type: string
+    class:
+      type: smallint
+    race:
+      type: smallint
+    gender:
+      type: smallint
+    level:
+      type: smallint
+    achievementPoints:
+      type: integer
+    thumbnail:
+      type: string
+    guild_rank:
+      type: smallint
+      nullable: true
+  manyToOne:
+    guild:
+      targetEntity: Guild
+      inversedBy: members
+      joinColumn:
+        name: guild_id
+        referencedColumnName: id
